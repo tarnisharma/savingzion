@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.saving.zion.fishonindia.Destinations;
-import com.saving.zion.fishonindia.DestinationsRepository;
+import com.saving.zion.fishonindia.dao.Destinations;
+import com.saving.zion.fishonindia.dao.DestinationsRepository;
 
 @RestController
 public class AutoSuggestionController {

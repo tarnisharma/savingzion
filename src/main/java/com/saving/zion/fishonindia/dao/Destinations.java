@@ -1,4 +1,4 @@
-package com.saving.zion.fishonindia;
+package com.saving.zion.fishonindia.dao;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

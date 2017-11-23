@@ -6,9 +6,9 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 @SpringBootApplication
 @EnableMongoRepositories
-public class FishonindiaApplication {
+public class FishOnIndiaApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(FishonindiaApplication.class, args);
+		SpringApplication.run(FishOnIndiaApplication.class, args);
 	}
 }

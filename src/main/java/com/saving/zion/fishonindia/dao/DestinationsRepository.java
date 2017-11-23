@@ -1,4 +1,4 @@
-package com.saving.zion.fishonindia;
+package com.saving.zion.fishonindia.dao;
 
 import java.util.List;
 
