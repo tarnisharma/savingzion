@@ -51,5 +51,12 @@ public class Destinations {
 	public void setLocationCode(String locationCode) {
 		this.locationCode = locationCode;
 	}
+	
+	@Override
+	public String toString() {
+		 return String.format(
+	                "Destination[id=%s, city='%s', state='%s', country='%s', locationCode='%s']",
+	                id, city, state, country, locationCode);
+	}
 
 }
