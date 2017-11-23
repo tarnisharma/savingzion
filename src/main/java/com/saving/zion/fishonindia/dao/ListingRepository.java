@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface ListingRepository extends MongoRepository<Listing, String> {
-	public List<Listing> findByName(String name);
+public interface ListingRepository extends MongoRepository<Listing, String> , ListingRepositoryCustom{
+	public List<Listing> findByNameLikeIgnoringCase(String name);
 	public List<Listing> findByListingId(String listingId);
-	public List<Listing> findByLocationCode(String locationCode);
+	public List<Listing> findByLocationCodeLikeIgnoringCase(String locationCode);
 }

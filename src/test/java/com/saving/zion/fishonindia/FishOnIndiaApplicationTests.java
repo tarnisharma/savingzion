@@ -33,37 +33,42 @@ public class FishOnIndiaApplicationTests {
 	public void contextLoads() {
 	}
 
-	// @Test
+	//@Test
 	public void destinationsRepositoryTest() {
-		Destinations andamans, goa, srinagar, pancheshwar;
+		Destinations andamans, goa, srinagar, pancheshwar,akhnoor;
 		destinationsRepository.deleteAll();
 		goa = destinationsRepository.save(new Destinations("Morijim", "Goa", "India", "GOA-IN"));
 		andamans = destinationsRepository.save(new Destinations("Port Blair", "Andamans", "India", "ANDM-IN"));
 		srinagar = destinationsRepository.save(new Destinations("Srinagar", "J&K", "India", "SXR-IN"));
 		pancheshwar = destinationsRepository.save(new Destinations("Pancheshwar", "Uttarakhand", "India", "PNCH-IN"));
+		akhnoor = destinationsRepository.save(new Destinations("Akhnoor", "J&K", "India", "AKH-IN"));
+		akhnoor = destinationsRepository.save(new Destinations("Andagreat", "J&K", "India", "ANDG-IN"));
 
-		List<Destinations> result = destinationsRepository.findByCityLike("Mor");
+		List<Destinations> result = destinationsRepository.findByCityLikeIgnoringCase("mor");
 		assertThat(result).hasSize(1).extracting("city").contains("Morijim");
 
-		result = destinationsRepository.findByState("J&K");
-		assertThat(result).hasSize(1).extracting("state").contains("J&K");
+		result = destinationsRepository.findByStateIgnoringCase("J&K");
+		assertThat(result).hasSize(3).extracting("state").contains("J&K");
 
-		result = destinationsRepository.findByCountry("India");
-		// System.err.println(result);
+		result = destinationsRepository.findByCityLikeIgnoringCaseOrStateLikeIgnoringCaseOrCountryLikeIgnoringCase("anda","anda","anda");
+		System.err.println(result.size());
+		for (Destinations d : result) {
+			System.err.println(d.toString());
+		}
 	}
 
-	// @Test
+	@Test
 	public void autosuggestion() {
-		List<Destinations> result = autoSuggestionController.getDestinations("");
+		List<Destinations> result = autoSuggestionController.getDestinations("and");
 		for (Destinations d : result) {
 			System.out.println(d.toString());
 		}
 
 	}
 
-	@Test
+	//@Test
 	public void listingRepositoryTest() {
-		List<Listing> result = listingRepository.findByLocationCode("GOA-IN");
+		List<Listing> result = listingRepository.findByLocationCodeLikeIgnoringCase("GOA-IN");
 		for (Listing d : result) {
 			System.out.println(d.toString());
 		}

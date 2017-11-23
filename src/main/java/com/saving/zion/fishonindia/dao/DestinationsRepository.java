@@ -6,10 +6,11 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface DestinationsRepository extends MongoRepository<Destinations,String>{
 
-	public List<Destinations> findByCity(String city);
-	public List<Destinations> findByState(String state);
-	public List<Destinations> findByCountry(String country);
-	public List<Destinations> findByCityLike(String city);
-	public List<Destinations> findByStateLike(String state);
-	public List<Destinations> findByCountryLike(String country);
+	public List<Destinations> findByCityIgnoringCase(String city);
+	public List<Destinations> findByStateIgnoringCase(String state);
+	public List<Destinations> findByCountryIgnoringCase(String country);
+	public List<Destinations> findByCityLikeIgnoringCase(String city);
+	public List<Destinations> findByStateLikeIgnoringCase(String state);
+	public List<Destinations> findByCountryLikeIgnoringCase(String country);
+	public List<Destinations> findByCityLikeIgnoringCaseOrStateLikeIgnoringCaseOrCountryLikeIgnoringCase(String city, String state, String country);
 }

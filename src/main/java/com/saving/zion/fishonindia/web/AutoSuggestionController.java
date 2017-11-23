@@ -1,6 +1,5 @@
 package com.saving.zion.fishonindia.web;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +17,6 @@ public class AutoSuggestionController {
 	
 	@RequestMapping(value = "/getDestinations")
 	public List<Destinations> getDestinations(@RequestParam(name="key", required=true, defaultValue="Andaman") String key) {
-		List<Destinations> cities = destinationsRepository.findByCityLike(key);
-		List<Destinations> states = destinationsRepository.findByStateLike(key);
-		List<Destinations> countries = destinationsRepository.findByCountryLike(key);
-		
-		List<Destinations> result =  new ArrayList<Destinations>();
-		result.addAll(cities);
-		result.addAll(states);
-		result.addAll(countries);
-		return result;
+		return destinationsRepository.findByCityLikeIgnoringCaseOrStateLikeIgnoringCaseOrCountryLikeIgnoringCase(key, key, key);
 	}
 }
