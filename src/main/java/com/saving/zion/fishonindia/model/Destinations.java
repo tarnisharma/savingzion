@@ -1,4 +1,4 @@
-package com.saving.zion.fishonindia.dao;
+package com.saving.zion.fishonindia.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -7,12 +7,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Destinations {
 
 	@Id
-	public String id;
+	private String id;
 	
-	public String city;
-	public String state;
-	public String country;
-	public String locationCode;
+	private String city;
+	private String state;
+	private String country;
+	private String locationCode;
 	
 	public Destinations() {}
 	public Destinations(String city, String state, String country, String locationCode) {
@@ -21,12 +21,7 @@ public class Destinations {
 		this.country = country;
 		this.locationCode = locationCode;
 	}
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
+	
 	public String getCity() {
 		return city;
 	}

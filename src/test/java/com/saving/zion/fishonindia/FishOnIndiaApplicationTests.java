@@ -2,6 +2,9 @@ package com.saving.zion.fishonindia;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Test;
@@ -10,32 +13,45 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.saving.zion.fishonindia.dao.Destinations;
+import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.saving.zion.fishonindia.dao.DestinationsRepository;
-import com.saving.zion.fishonindia.dao.Listing;
+import com.saving.zion.fishonindia.dao.FiltersRepository;
 import com.saving.zion.fishonindia.dao.ListingRepository;
-import com.saving.zion.fishonindia.web.AutoSuggestionController;
+import com.saving.zion.fishonindia.model.Destinations;
+import com.saving.zion.fishonindia.model.Listing;
+import com.saving.zion.fishonindia.model.Response;
+import com.saving.zion.fishonindia.service.ListingDetailsAggregator;
+import com.saving.zion.fishonindia.service.SearchAggregator;
+import com.saving.zion.fishonindia.web.MainController;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class FishOnIndiaApplicationTests {
 
 	@Autowired
-	AutoSuggestionController autoSuggestionController;
+	MainController autoSuggestionController;
 
 	@Autowired
 	DestinationsRepository destinationsRepository;
-	
+
 	@Autowired
 	ListingRepository listingRepository;
 
-	@Test
+	@Autowired
+	FiltersRepository filtersRepository;
+	@Autowired
+	SearchAggregator searchAggregator;
+	@Autowired
+	ListingDetailsAggregator listingDetailsAggregator;
+
+
+	// @Test
 	public void contextLoads() {
 	}
 
-	//@Test
+	// @Test
 	public void destinationsRepositoryTest() {
-		Destinations andamans, goa, srinagar, pancheshwar,akhnoor;
+		Destinations andamans, goa, srinagar, pancheshwar, akhnoor;
 		destinationsRepository.deleteAll();
 		goa = destinationsRepository.save(new Destinations("Morijim", "Goa", "India", "GOA-IN"));
 		andamans = destinationsRepository.save(new Destinations("Port Blair", "Andamans", "India", "ANDM-IN"));
@@ -44,33 +60,65 @@ public class FishOnIndiaApplicationTests {
 		akhnoor = destinationsRepository.save(new Destinations("Akhnoor", "J&K", "India", "AKH-IN"));
 		akhnoor = destinationsRepository.save(new Destinations("Andagreat", "J&K", "India", "ANDG-IN"));
 
-		List<Destinations> result = destinationsRepository.findByCityLikeIgnoringCase("mor");
+		List<Destinations> result = destinationsRepository.findByCityStartingWithIgnoringCase("mor");
 		assertThat(result).hasSize(1).extracting("city").contains("Morijim");
 
 		result = destinationsRepository.findByStateIgnoringCase("J&K");
 		assertThat(result).hasSize(3).extracting("state").contains("J&K");
 
-		result = destinationsRepository.findByCityLikeIgnoringCaseOrStateLikeIgnoringCaseOrCountryLikeIgnoringCase("anda","anda","anda");
+		result = destinationsRepository
+				.findByCityStartingWithIgnoringCaseOrStateStartingWithIgnoringCaseOrCountryStartingWithIgnoringCase(
+						"anda", "anda", "anda");
 		System.err.println(result.size());
 		for (Destinations d : result) {
 			System.err.println(d.toString());
 		}
 	}
 
-	@Test
+	// @Test
 	public void autosuggestion() {
-		List<Destinations> result = autoSuggestionController.getDestinations("and");
-		for (Destinations d : result) {
-			System.out.println(d.toString());
-		}
+		Response result = autoSuggestionController.getDestinations("an");
+		System.out.println(result.toString());
+	}
 
+	// @Test
+	public void listingRepositoryTest() {
+		List<Listing> result = listingRepository.findByLocationCode("ANDM-IN");
+		for (Listing d : result) {
+			System.err.println(d.toString());
+		}
+	}
+
+	// @Test
+	public void testDate() {
+		String fromDate = "2017-12-01";
+		ISO8601DateFormat outputFormatter = new ISO8601DateFormat();
+		SimpleDateFormat inputFormatter = new SimpleDateFormat("yyyy-MM-dd");
+		Date inputDate;
+		try {
+			inputDate = inputFormatter.parse(fromDate);
+			String outputDate = outputFormatter.format(inputDate);
+			System.out.println(outputDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	//@Test
-	public void listingRepositoryTest() {
-		List<Listing> result = listingRepository.findByLocationCodeLikeIgnoringCase("GOA-IN");
-		for (Listing d : result) {
-			System.out.println(d.toString());
-		}
+	public void testFilters() {
+		System.out.println(filtersRepository.findAll().toString());
 	}
+	
+	//@Test
+	public void getListingsTest() {
+		System.out.println(searchAggregator.getListings("ANDM-IN"));
+	}
+	
+	@Test
+	public void getListingDetailsTest() {
+		System.out.println(listingRepository.findByListingId("3").toString());
+		System.out.println(listingDetailsAggregator.getListingDetails("3"));
+	}
+
 }

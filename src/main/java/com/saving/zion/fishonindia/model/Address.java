@@ -1,23 +1,20 @@
-package com.saving.zion.fishonindia.dao;
+package com.saving.zion.fishonindia.model;
 
 import org.springframework.data.annotation.Id;
 
 public class Address {
 	
 	@Id
-	public String id;
+	private String id;
 	
-	public String city;
-	public String state;
-	public String country;
-	public String area;
-	public String fullAddress;
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
+	private String city;
+	private String state;
+	private String country;
+	private String area;
+	private String fullAddress;
+	private float lat;
+	private float lon;
+	
 	public String getCity() {
 		return city;
 	}
@@ -47,5 +44,17 @@ public class Address {
 	}
 	public void setFullAddress(String fullAddress) {
 		this.fullAddress = fullAddress;
+	}
+	public float getLatitude() {
+		return lat;
+	}
+	public float getLongitude() {
+		return lon;
+	}
+	public void setLatitude(float latitude) {
+		this.lat = latitude;
+	}
+	public void setLongitude(float longitude) {
+		this.lon = longitude;
 	}
 }
