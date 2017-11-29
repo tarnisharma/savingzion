@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.saving.zion.fishonindia.dao.FiltersRepository;
@@ -26,7 +27,9 @@ public class SearchAggregator {
 	@Autowired
 	FiltersRepository filtersRepository;
 
+	@Cacheable(value = "listingCache", key = "#locCode", condition = "#result.resCode == 200", sync = true)
 	public Response getListings(String locCode) {
+		System.out.println("Inside getListings");
 		Timeit.timeIt("getListings");
 		try {
 			if (filtersRepository.count() > 0) {

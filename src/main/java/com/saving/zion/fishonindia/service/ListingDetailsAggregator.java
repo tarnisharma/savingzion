@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.saving.zion.fishonindia.dao.ContentRepository;
@@ -28,6 +29,7 @@ public class ListingDetailsAggregator {
 	@Autowired
 	ContentRepository contentRepository;
 
+	@Cacheable(value = "listingDetailsCache", key = "#listingId", condition = "#result.resCode == 200", sync = true)
 	public Response getListingDetails(String listingId) {
 		Timeit.timeIt("getListingDetails");
 		try {

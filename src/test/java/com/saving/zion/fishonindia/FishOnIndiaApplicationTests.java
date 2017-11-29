@@ -110,12 +110,12 @@ public class FishOnIndiaApplicationTests {
 		System.out.println(filtersRepository.findAll().toString());
 	}
 	
-	//@Test
+	@Test
 	public void getListingsTest() {
 		System.out.println(searchAggregator.getListings("ANDM-IN"));
 	}
 	
-	@Test
+	//@Test
 	public void getListingDetailsTest() {
 		System.out.println(listingRepository.findByListingId("3").toString());
 		System.out.println(listingDetailsAggregator.getListingDetails("3"));
