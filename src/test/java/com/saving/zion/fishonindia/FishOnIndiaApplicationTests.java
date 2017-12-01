@@ -19,9 +19,12 @@ import com.saving.zion.fishonindia.dao.FiltersRepository;
 import com.saving.zion.fishonindia.dao.ListingRepository;
 import com.saving.zion.fishonindia.model.Destinations;
 import com.saving.zion.fishonindia.model.Listing;
+import com.saving.zion.fishonindia.model.RequestSubmission;
 import com.saving.zion.fishonindia.model.Response;
+import com.saving.zion.fishonindia.model.UserDetails;
 import com.saving.zion.fishonindia.service.ListingDetailsAggregator;
 import com.saving.zion.fishonindia.service.SearchAggregator;
+import com.saving.zion.fishonindia.service.SubmitRequestService;
 import com.saving.zion.fishonindia.web.MainController;
 
 @RunWith(SpringRunner.class)
@@ -43,6 +46,7 @@ public class FishOnIndiaApplicationTests {
 	SearchAggregator searchAggregator;
 	@Autowired
 	ListingDetailsAggregator listingDetailsAggregator;
+	@Autowired SubmitRequestService submitRequestService;
 
 
 	// @Test
@@ -119,6 +123,24 @@ public class FishOnIndiaApplicationTests {
 	public void getListingDetailsTest() {
 		System.out.println(listingRepository.findByListingId("3").toString());
 		System.out.println(listingDetailsAggregator.getListingDetails("3"));
+	}
+	
+	//@Test
+	public void submitRequestTest() {
+		RequestSubmission req = new RequestSubmission();
+		req.setComments("djkfvkuahf");
+		req.setInterests("jkhfuhsf");
+		req.setDates("skjdhfkahf");
+		req.setListingId("3");
+		req.setLocationCode("ANDM-IN");
+		req.setName("kjhfhrf");
+		req.setPaxCount(3);
+		UserDetails user = new UserDetails();
+		user.setContactNumber("kjdfef");
+		user.setEmailId("jkfhhf");
+		user.setName("hjfgfr");
+		req.setUserDetails(user);
+		System.out.println(submitRequestService.submitRequest(req));
 	}
 
 }

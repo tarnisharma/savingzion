@@ -1,0 +1,22 @@
+<html>
+ 
+<head></head>
+ 
+<body>
+    <p>Dear ${content.requestSubmission.name},</p>
+    <p>We have received your request. Your Reference number is <b>${content.requestSubmission.submissionId}</b></p>
+	<table>
+		<tr><td>Listing ID :  ${content.listing.listingId} </td></tr>
+		<tr><td>Listing Name :  ${content.listing.name} </td></tr>
+		<tr><td>Address :  ${content.listing.address.city}, ${content.listing.address.state}, ${content.listing.address.area}, ${content.listing.address.country} </td></tr>
+		<tr><td>Dates  :  ${content.requestSubmission.dates} </td></tr>
+		<tr><td>Travelers  :  ${content.requestSubmission.paxCount} </td></tr>
+		<tr><td>Comments  :  ${content.requestSubmission.comments} </td></tr>
+		<tr><td>Interests  :  ${content.requestSubmission.interests} </td></tr>
+	</table>
+	<p>We will contact you @  ${content.requestSubmission.userDetails.emailId} or ${content.requestSubmission.userDetails.contactNumber} within 24 hours. </p>
+    <p>Regards,</p>
+    <p>FishOnIndia Team</p>
+</body>
+ 
+</html>

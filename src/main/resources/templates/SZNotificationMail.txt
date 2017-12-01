@@ -1,0 +1,22 @@
+<html>
+ 
+<head></head>
+ 
+<body>
+    <p>Dear FishOnIndia Team,</p>
+    <p>${content.requestSubmission.name} has submitted a request. The Reference number is <b>${content.requestSubmission.submissionId}</b>.</p>
+	<table>
+		<tr><td>Listing ID :  ${content.listing.listingId} </td></tr>
+		<tr><td>Listing Name :  ${content.listing.name} </td></tr>
+		<tr><td>Address :  ${content.listing.address.city}, ${content.listing.address.state}, ${content.listing.address.area}, ${content.listing.address.country} </td></tr>
+		<tr><td>Dates  :  ${content.requestSubmission.dates} </td></tr>
+		<tr><td>Travelers  :  ${content.requestSubmission.paxCount} </td></tr>
+		<tr><td>Comments  :  ${content.requestSubmission.comments} </td></tr>
+		<tr><td>Customer Contact Info  :  ${content.requestSubmission.userDetails.emailId} ${content.requestSubmission.userDetails.contactNumber} </td></tr>
+		<tr><td>Listing Contact Info  :  <#list content.listing.contact as phone>${phone}</#list> </td></tr>
+		<tr><td>Interests  :  ${content.requestSubmission.interests} </td></tr>
+	</table>
+    <p>Thanks</p>
+</body>
+ 
+</html>
