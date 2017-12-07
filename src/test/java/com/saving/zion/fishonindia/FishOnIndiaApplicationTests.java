@@ -114,7 +114,7 @@ public class FishOnIndiaApplicationTests {
 		System.out.println(filtersRepository.findAll().toString());
 	}
 	
-	@Test
+	//@Test
 	public void getListingsTest() {
 		System.out.println(searchAggregator.getListings("ANDM-IN"));
 	}
@@ -125,7 +125,7 @@ public class FishOnIndiaApplicationTests {
 		System.out.println(listingDetailsAggregator.getListingDetails("3"));
 	}
 	
-	//@Test
+	@Test
 	public void submitRequestTest() {
 		RequestSubmission req = new RequestSubmission();
 		req.setComments("djkfvkuahf");

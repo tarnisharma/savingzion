@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang.RandomStringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import com.saving.zion.fishonindia.dao.ListingRepository;
@@ -20,12 +22,16 @@ import com.saving.zion.fishonindia.util.Timeit;
 public class SubmitRequestService {
 
 	@Autowired
-	RequestSubmissionRepository requestSubmissionRepository;
+	private RequestSubmissionRepository requestSubmissionRepository;
 	@Autowired
-	EMailService mailService;
+	private EmailService mailService;
 	@Autowired
-	ListingRepository listingRepository;
+	private ListingRepository listingRepository;
+	@Autowired
+	private Environment env;
 
+
+	private static final Logger logger = Logger.getLogger(SubmitRequestService.class);
 	public Response submitRequest(RequestSubmission requestSubmission) {
 		Timeit.timeIt("submitRequest");
 		try {
@@ -53,16 +59,16 @@ public class SubmitRequestService {
 	private void notifyCustomer(MailContent mailContent) {
 		try {
 			Mail mail = new Mail();
-			mail.setMailFrom("fishonindia@gmail.com");
-			mail.setMailSubject(mailContent.getListing().getName() +" | FishOnIndia Request Submission Confirmation");
+			mail.setMailFrom(env.getProperty("customer.mail.from.emailId"));
+			mail.setMailSubject(mailContent.getListing().getName() +env.getProperty("customer.mail.subject"));
 			mail.setMailTo(mailContent.getRequestSubmission().getUserDetails().getEmailId());
 			mail.setMailBcc("fishonindia@gmail.com");
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("content", mailContent);
 			mail.setModel(model);
-			mailService.sendEmail(mail, "CustomerNotificationMail.txt");
+			mailService.sendEmail(mail, env.getProperty("customer.mail.template"));
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 		}
 	}
 
@@ -70,14 +76,14 @@ public class SubmitRequestService {
 		try {
 			Mail mail = new Mail();
 			mail.setMailFrom("donotreply@fishonindia.com");
-			mail.setMailSubject(mailContent.getListing().getName() +"| Request Submission Lead");
+			mail.setMailSubject(mailContent.getListing().getName() +env.getProperty("sz.mail.subject"));
 			mail.setMailTo("fishonindia@gmail.com");
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("content", mailContent);
 			mail.setModel(model);
-			mailService.sendEmail(mail, "SZNotificationMail.txt");
+			mailService.sendEmail(mail, env.getProperty("sz.mail.template"));
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 		}
 	}
 

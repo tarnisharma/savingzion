@@ -23,13 +23,13 @@ import com.saving.zion.fishonindia.util.Timeit;
 public class MainController {
 
 	@Autowired
-	DestinationsService destinationsService;
+	private DestinationsService destinationsService;
 	@Autowired
-	SearchAggregator searchAggregator;
+	private SearchAggregator searchAggregator;
 	@Autowired
-	ListingDetailsAggregator listingDetailsAggregator;
+	private ListingDetailsAggregator listingDetailsAggregator;
 	@Autowired
-	SubmitRequestService submitRequestService;
+	private SubmitRequestService submitRequestService;
 
 	private static final Logger logger = Logger.getLogger(MainController.class);
 
@@ -60,6 +60,11 @@ public class MainController {
 
 	@RequestMapping(value = "/submitRequest", method = RequestMethod.POST, consumes = "application/json")
 	public Response submitRequest(@RequestBody RequestSubmission requestSubmission) {
+		return submitRequestService.submitRequest(requestSubmission);
+	}
+	
+	@RequestMapping(value = "/addListing", method = RequestMethod.POST, consumes = "application/json")
+	public Response addListing(@RequestBody RequestSubmission requestSubmission) {
 		return submitRequestService.submitRequest(requestSubmission);
 	}
 }

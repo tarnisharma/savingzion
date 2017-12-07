@@ -28,7 +28,7 @@ public class XSSFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
         throws IOException, ServletException {
-    		System.err.println("Inside filter");
+    		System.out.println("Inside filter");
         chain.doFilter(new XSSRequestWrapper((HttpServletRequest) request), response);
     }
 
